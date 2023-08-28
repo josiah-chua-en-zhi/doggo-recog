@@ -4,6 +4,7 @@ GCS Utils
 import os
 import io
 import pandas as pd
+from pathlib import Path
 from google.cloud import storage
 from google.api_core.exceptions import NotFound, Forbidden, GoogleAPIError, Conflict
 
@@ -124,7 +125,7 @@ class GCSBucket:
                 the file does not exist.
             google.cloud.exceptions.GoogleCloudError: If the upload fails due to network issues.
         """
-        if not isinstance(source_file_path, str):
+        if not isinstance(source_file_path, Path):
             raise ValueError("source_file_path should be a string")
         if not isinstance(destination_blob_name, str):
             raise ValueError("destination_blob_name should be a string")

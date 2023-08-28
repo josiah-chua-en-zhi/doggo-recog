@@ -135,6 +135,9 @@ venv.bak/
 # Credentials
 credentials/
 
+# Data
+data/
+
 # Spyder project settings
 .spyderproject
 .spyproject
@@ -196,5 +199,3 @@ poetry.toml
 
 .vscode
 .idea
-
-mlruns

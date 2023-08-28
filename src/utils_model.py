@@ -26,6 +26,8 @@ class Models:
         "vgg": vgg16_model
         }
     
+    model_names = list(classification_models.keys())
+    
     final_layer_access_classfier = ["efficientnet", "vgg16"]
     final_layer_access_fc = ["resnet"]
 
@@ -47,8 +49,29 @@ class Models:
             raise ValueError(f"model name {model_name}'s final layer configuration not provided")
         
         return model
-    
 
+class PreprocessingTransforms:
+    standard_params = {
+        'batch_size': 64,
+        'rescale_add': 32,
+        'random_contrast_p': 0.025,
+        'random_contrast_min_contrast': 0.5,
+        'random_contrast_max_contrast': 2.0,
+        'random_grey_scale_p': 0.025,
+        'random_greyscale_ch_num': 3,
+        'random_persepctive_p': 0.025,
+        'random_persepctive_max_padding_ratio': 0.7,
+        'random_rorate_p': 0.025,
+        'random_rorate_rotate_range': (0, 360),
+        'random_flip_p': 0.025,
+        'random_brighten_p': 0.025,
+        'random_brighten_min_brightness': 0.33,
+        'random_brighten_max_brightness': 3,
+        'random_gaussian_blur_p': 0.025,
+        'random_gaussian_blur_kernel_height_range': (7, 12),
+        'random_gaussian_blur_kernel_width_range': (7, 12)
+    }
+    standard_lr = 1e-3
 
 class ClassificationModel(LightningModule):
     """

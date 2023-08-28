@@ -3,11 +3,10 @@ Util function for preprocessing
 """
 import os
 import io
+from pathlib import Path
 from io import BytesIO
 import numpy as np
 from PIL import Image
-from utils_envvar import EnvVar
-
 
 class PreprocessingUtils:
 
@@ -62,11 +61,11 @@ class PreprocessingUtils:
             raise OSError("An error occurred while converting image numpy array image to bytes.") from _e
     
     @staticmethod
-    def get_new_img_arrays(env_var: EnvVar):
-        new_filenames = os.listdir(env_var.new_data_dir)
+    def get_new_img_arrays(new_data_dir: Path):
+        new_filenames = os.listdir(new_data_dir)
         for filename in new_filenames:
-
-            image = Image.open(filename)
+            filepath = new_data_dir / filename
+            image = Image.open(filepath)
             image_array = np.asarray(image)
 
             yield filename, image_array
