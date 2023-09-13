@@ -437,7 +437,7 @@ class Normalize(object):
 
 class Format(object):
 
-    """Convert into (img filename, label) format."""
+    """Convert into (img, label) format."""
 
     def __init__(self, filename_col_name, label_col_name):
         self.filename_col_name = filename_col_name
@@ -447,22 +447,61 @@ class Format(object):
         image, label = sample[self.filename_col_name], sample[self.label_col_name]
         return (image,label)
     
+class PredictionFormat(object):
+
+    """Convert into (img) format."""
+
+    def __init__(self, filename_col_name, label_col_name):
+        self.filename_col_name = filename_col_name
+        self.label_col_name = label_col_name
+
+    def __call__(self, sample):
+        image = sample[self.filename_col_name]
+        # Convert to (1,3,224,224) shape
+        return (image[None, :, :, :])
+    
 class DataLoaderConstructors():
     def __init__(
             self,
-            train_dataset: pd.DataFrame,
-            val_dataset: pd.DataFrame,
-            test_dataset: pd.DataFrame,
-            filename_col_name: str,
-            label_col_name: str):
+            train_dataset : pd.DataFrame = pd.DataFrame(),
+            val_dataset : pd.DataFrame = pd.DataFrame(),
+            test_dataset: pd.DataFrame = pd.DataFrame(),
+            filename_col_name: str = None,
+            label_col_name: str = None):
         
         self.train_dataset = train_dataset
         self.val_dataset = val_dataset
         self.test_dataset = test_dataset
         self.filename_col_name = filename_col_name
         self.label_col_name = label_col_name
+
+        self.train_transform = None
+        self.test_val_transform = None
+        self.prediction_transformer = None
+
+    def initalze_prediction_transformer(
+            self,
+            input_size: int = 224,
+            rescale_add: int = 32):
         
-    def initalize_dataloaders(
+        self.prediction_transformer = transforms.Compose([
+            ToTensor(filename_col_name = self.filename_col_name,
+                     label_col_name = self.label_col_name),
+            Rescale(filename_col_name = self.filename_col_name,
+                    label_col_name = self.label_col_name, 
+                    output_size = input_size + rescale_add),
+            RandomCrop(filename_col_name = self.filename_col_name,
+                       label_col_name = self.label_col_name,
+                       output_size = input_size),
+            ScalePixelValues(filename_col_name = self.filename_col_name,
+                             label_col_name = self.label_col_name),
+            Normalize(filename_col_name = self.filename_col_name,
+                      label_col_name = self.label_col_name),
+            PredictionFormat(filename_col_name = self.filename_col_name,
+                   label_col_name = self.label_col_name)])
+        return self.prediction_transformer
+
+    def initalize_data_transformers(
             self,
             batch_size: int = 128,
             input_size: int = 224, 
@@ -511,7 +550,7 @@ class DataLoaderConstructors():
         assert isinstance(random_gaussian_blur_kernel_width_range, tuple) or \
             isinstance(random_gaussian_blur_kernel_width_range, list), "random_gaussian_blur_kernel_width_range must be a tuple or list"
         
-        train_transform = transforms.Compose([
+        self.train_transform = transforms.Compose([
             ToTensor(filename_col_name = self.filename_col_name,
                      label_col_name = self.label_col_name),
             Rescale(filename_col_name = self.filename_col_name,
@@ -557,7 +596,7 @@ class DataLoaderConstructors():
             Format(filename_col_name = self.filename_col_name,
                    label_col_name = self.label_col_name)])
 
-        test_val_transform = transforms.Compose([
+        self.test_val_transform = transforms.Compose([
             ToTensor(filename_col_name = self.filename_col_name,
                      label_col_name = self.label_col_name),
             Rescale(filename_col_name = self.filename_col_name,
@@ -573,25 +612,27 @@ class DataLoaderConstructors():
             Format(filename_col_name = self.filename_col_name,
                    label_col_name = self.label_col_name)])
         
+    def initalize_dataloaders(self, batch_size: int = 128):
+        
         train_dataset = DoggoDataset(
             dataset_df = self.train_dataset,
             filename_col_name = self.filename_col_name, 
             label_col_name = self.label_col_name,
-            transform = train_transform
+            transform = self.train_transform
         )
 
         val_dataset = DoggoDataset(
             dataset_df = self.val_dataset,
             filename_col_name = self.filename_col_name, 
             label_col_name = self.label_col_name,
-            transform = test_val_transform
+            transform = self.test_val_transform
         )
 
         test_dataset = DoggoDataset(
             dataset_df = self.test_dataset,
             filename_col_name = self.filename_col_name, 
             label_col_name = self.label_col_name,
-            transform = test_val_transform
+            transform = self.test_val_transform
         )
 
         # Create data loaders.

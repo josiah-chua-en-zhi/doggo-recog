@@ -1,15 +1,9 @@
-from datetime import datetime, timezone
-from lightning import LightningModule, Trainer
-from lightning.pytorch.loggers import NeptuneLogger
 import torch
 from torch import nn
-import torchmetrics
+from lightning import LightningModule
 from torchmetrics.classification import MulticlassAUROC, MulticlassAccuracy
 from torchvision.models import efficientnet_b0, resnet18, vgg16
-from lightning.pytorch.loggers import NeptuneLogger
-from lightning.pytorch.callbacks.early_stopping import EarlyStopping
-from lightning.pytorch.callbacks import ModelCheckpoint
-import neptune
+
 
 
 class Models:

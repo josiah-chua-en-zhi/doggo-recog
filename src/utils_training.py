@@ -2,17 +2,14 @@
 Util function for training
 """
 import os
-from pathlib import Path
+import torch
+import neptune
 from datetime import datetime, timezone
-from lightning import LightningModule, Trainer
+from lightning import Trainer
 from lightning.pytorch.loggers import NeptuneLogger
 from lightning.pytorch.loggers import NeptuneLogger
 from lightning.pytorch.callbacks.early_stopping import EarlyStopping
 from lightning.pytorch.callbacks import ModelCheckpoint
-import torch
-import torchmetrics
-from torchmetrics.classification import MulticlassAUROC, MulticlassAccuracy
-import neptune
 from utils_envvar import EnvVar, GeneralUtils
 from utils_model import ClassificationModel
 
@@ -25,17 +22,19 @@ class ModelTrainer:
                  test_datloader,
                  proj_key: dict,
                  lr: float,
-                 total_labels: int):
+                 label_dict: dict):
         
         self.model_name = model_name
         self.lr = lr
-        self.total_labels = total_labels
+        self.label_dict = label_dict
+        self.total_labels = len(label_dict)
 
         self.model_id = f"{model_name}_{datetime.now(timezone.utc).strftime('000000%Y%m%d%H%M%S%f')}"
         self.model_ckpt_path = os.path.join(env_var.model_data_checkpoints_dir,self.model_name,self.model_id)
         self.model_saved_folderpath = os.path.join(env_var.model_data_models_dir, self.model_name)
-        self.model_filepath = self.model_id + ".pt"
-        self.model_saved_path = os.path.join(self.model_saved_folderpath,self.model_filepath)
+        self.model_saved_path = os.path.join(self.model_saved_folderpath,self.model_id + ".pt")
+        self.model_label_dict_folderpath = os.path.join(env_var.model_data_label_dict_dir, self.model_name)
+        self.model_label_dict_path = os.path.join(self.model_saved_folderpath,self.model_id + ".json")
 
         GeneralUtils.create_folder_if_not_exists(self.model_ckpt_path)
         GeneralUtils.create_folder_if_not_exists(self.model_saved_folderpath)
@@ -113,9 +112,16 @@ class ModelTrainer:
         model_version = neptune.init_model_version(
             project=self.proj,
             model= self.proj_key + "-" + self.model_key)
+        
+        # save label dictionary
 
+        GeneralUtils.save_dict_as_json(
+            filename = self.model_label_dict_path,
+            dict_ = self.label_dict)
+        
         model_version["model/script"].upload(self.model_saved_path)
         model_version["model/checkpoint"].upload(best_model)
+        model_version["model/labels"].upload(self.model_label_dict_path)
         model_version.change_stage('archived')
 
         model_version.stop()

@@ -69,6 +69,11 @@ class GeneralUtils:
             os.unlink(file_path)
         except Exception as e:
             print('Failed to delete %s. Reason: %s' % (file_path, e))
+
+    @staticmethod
+    def save_dict_as_json(filename: str, dict_: dict):
+        with open(filename, 'w') as json_file:
+            json.dump(dict_, json_file)
     
 
 class EnvVar(BaseSettings):
@@ -86,6 +91,7 @@ class EnvVar(BaseSettings):
     neptune_exp_key : str = os.environ.get("NEPTUNE_EXP_PROJECT_KEY", None)
     neptune_training_project : str = os.environ.get("NEPTUNE_TRAINING_PROJECT", None)
     neptune_training_key : str = os.environ.get("NEPTUNE_TRAINING_PROJECT_KEY", None)
+    tele_api_key: str = os.environ.get("TELE_API_KEY", None)
 
     exp_proj_key = {
         "project":neptune_exp_project,
@@ -97,7 +103,6 @@ class EnvVar(BaseSettings):
         "key": neptune_training_key
     }
 
-
     root_dir = Path(".")
     data_dir = root_dir / "data"
     new_data_dir = data_dir / "new_data"
@@ -105,7 +110,11 @@ class EnvVar(BaseSettings):
     model_data_dir = data_dir / "model_data"
     model_data_checkpoints_dir = model_data_dir / "models_checkpoints"
     model_data_models_dir = model_data_dir / "models"
+    model_data_label_dict_dir = model_data_dir / "label_dictionaries"
+    deployment_model_dir = data_dir / "deployment_model"
+    deployment_model_path = deployment_model_dir / "script.pt"
     cred_dir = root_dir / "credentials"
+    tmp_pic_path =  data_dir / "tmp.jpg"
 
     label_col_names = "label"
     filenames_col_names = "filenames"
@@ -121,6 +130,7 @@ class EnvVar(BaseSettings):
     GeneralUtils.create_folder_if_not_exists(model_data_dir)
     GeneralUtils.create_folder_if_not_exists(model_data_checkpoints_dir)
     GeneralUtils.create_folder_if_not_exists(model_data_models_dir)
+    GeneralUtils.create_folder_if_not_exists(deployment_model_dir)
     GeneralUtils.create_folder_if_not_exists(cred_dir)
 
     # Set GOOGLE_APPLICATION_CREDENTIALS with gcssa_credentials

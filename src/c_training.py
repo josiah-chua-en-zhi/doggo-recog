@@ -96,8 +96,13 @@ class Training:
             filename_col_name = env_vars.local_filenames_col_names,
             label_col_name = env_vars.label_col_names
         )
-        train_dataloader, val_dataloader, test_dataloader = dataloader_constructors.initalize_dataloaders(
+
+        dataloader_constructors.initalize_data_transformers(
             **PreprocessingTransforms.standard_params
+        )
+
+        train_dataloader, val_dataloader, test_dataloader = dataloader_constructors.initalize_dataloaders(
+            batch_size = PreprocessingTransforms.standard_params["batch_size"]
         )
 
         model_trainer = ModelTrainer(
@@ -108,7 +113,7 @@ class Training:
             test_datloader = test_dataloader,
             proj_key = proj_key,
             lr = PreprocessingTransforms.standard_lr,
-            total_labels = len(label_dict)
+            label_dict = label_dict
             )
         
         model_trainer.train_model(patience = patience)
