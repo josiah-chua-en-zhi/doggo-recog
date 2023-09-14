@@ -74,7 +74,12 @@ class GeneralUtils:
     def save_dict_as_json(filename: str, dict_: dict):
         with open(filename, 'w') as json_file:
             json.dump(dict_, json_file)
-    
+
+    @staticmethod
+    def open_json_to_dict(filename: str):
+        with open(filename) as json_file:
+            dict_ = json.load(json_file)
+        return dict_
 
 class EnvVar(BaseSettings):
     """
@@ -113,6 +118,7 @@ class EnvVar(BaseSettings):
     model_data_label_dict_dir = model_data_dir / "label_dictionaries"
     deployment_model_dir = data_dir / "deployment_model"
     deployment_model_path = deployment_model_dir / "script.pt"
+    deployment_label_path = deployment_model_dir / "labels.json"
     cred_dir = root_dir / "credentials"
     tmp_pic_path =  data_dir / "tmp.jpg"
 

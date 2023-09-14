@@ -34,7 +34,7 @@ class ModelTrainer:
         self.model_saved_folderpath = os.path.join(env_var.model_data_models_dir, self.model_name)
         self.model_saved_path = os.path.join(self.model_saved_folderpath,self.model_id + ".pt")
         self.model_label_dict_folderpath = os.path.join(env_var.model_data_label_dict_dir, self.model_name)
-        self.model_label_dict_path = os.path.join(self.model_saved_folderpath,self.model_id + ".json")
+        self.model_label_dict_path = os.path.join(self.model_saved_folderpath,self.model_id + "_labels" + ".json")
 
         GeneralUtils.create_folder_if_not_exists(self.model_ckpt_path)
         GeneralUtils.create_folder_if_not_exists(self.model_saved_folderpath)

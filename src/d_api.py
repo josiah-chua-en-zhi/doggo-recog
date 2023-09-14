@@ -8,7 +8,7 @@ from PIL import Image
 import torch.nn.functional as F
 import uvicorn
 from fastapi import FastAPI, Request
-from utils_envvar import EnvVar
+from utils_envvar import EnvVar, GeneralUtils
 from utils_data import DataLoaderConstructors
 from utils_model import Models
 
@@ -41,7 +41,7 @@ class ModelPredictor:
 
         # load jit model
         self.model_version["model/script"].download(env_vars.deployment_model_dir.as_posix())
-        #self.deployment_label_dict = self.model_version["model/labels"].download(env_vars.deployment_model_dir)
+        self.model_version["model/labels"].download(env_vars.deployment_model_dir.as_posix())
 
         self.dataloader_constructors = DataLoaderConstructors(
             filename_col_name = env_vars.local_filenames_col_names,
@@ -50,6 +50,8 @@ class ModelPredictor:
 
         self.model = torch.jit.load(env_vars.deployment_model_path.as_posix())
         self.prediction_transformer = self.dataloader_constructors.initalze_prediction_transformer()
+        self.label_dict = GeneralUtils.open_json_to_dict(env_vars.deployment_label_path.as_posix())
+        print(self.label_dict)
 
         self.model_repo.stop()
         self.model_version.stop()
@@ -67,7 +69,7 @@ class ModelPredictor:
         pred = F.softmax(pred, dim=1)
         pred_top3 = pred.topk(3).indices.tolist()[0]
         pred = pred.tolist()
-        pred_pct = [f"{i}: {round(100*pred[0][i],2)}%" for i in pred_top3]
+        pred_pct = [f"{self.label_dict[str(i)]}: {round(100*pred[0][i],2)}%" for i in pred_top3]
         result = f"{pred_pct[0]}\n{pred_pct[1]}\n{pred_pct[2]}"
  
         return result
@@ -95,9 +97,12 @@ class PredictorApi:
 
             print(data)
 
-            chat_id = await self.parse_message(data)
+            chat_id, valid_input = await self.parse_message(data)
 
-            prediction = self.predictor.predict()
+            if valid_input:
+                prediction = self.predictor.predict()
+            else:
+                prediction = "Please send a picture"
 
             self.tel_send_message(chat_id, prediction)
 
@@ -106,10 +111,15 @@ class PredictorApi:
     async def parse_message(self, message):
         print("message-->",message)
         chat_id = message['message']['from']['id']
-        file_id = message['message']['photo'][0]["file_id"]
+        try:
+            file_id = message['message']['photo'][0]["file_id"]
+            await self.retrieve_file(file_id)
+            valid_input = True
+        except KeyError:
+            valid_input = False
         print("chat_id-->", chat_id)
-        await self.retrieve_file(file_id)
-        return chat_id
+        
+        return chat_id, valid_input
     
     async def retrieve_file(self, file_id):
 
