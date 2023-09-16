@@ -9,6 +9,12 @@ The main objectives are to test the effectiveness of Neptune AI, an ML model mon
 ## File structure
 ```
 doggo-recog/
+├── credentials/
+├── data/
+│   ├── deployment_model/
+│   ├── model_data/
+│   ├── new_data/
+│   └── temp_data/
 ├── src/
 │   ├── a_preprocessing.py
 │   ├── b_experiment.py
