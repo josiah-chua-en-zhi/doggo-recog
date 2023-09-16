@@ -5,8 +5,29 @@ The main objectives are to test the effectiveness of Neptune AI, an ML model mon
 ## MLOps Pipeline
 ![DoggoRecogo drawio](https://github.com/josiah-chua/doggo-recog/assets/81459293/3788d92f-7261-444a-b4ae-9a1f38bb11f7)
 
-## Usage
+## File structure
+doggo-recog/
+├── src/
+│   ├── a_preprocessing.py
+│   ├── b_experiment.py
+│   ├── c_training.py
+│   └── d_api.py
+│       ├── utils/
+│       ├── utils_data.py
+│       ├── utils_envvar.py
+│       ├── utils_gcs.py
+│       ├── utils_model.py
+│       ├── utils_preprocessing.py
+│       └── utils_training.py
+├── .gitignore
+├── README.md
+├── .requirements.txt
 
+
+## Original Dataset
+The dataset can be found in the dataset branch 
+## Usage
+/
 
 
 
