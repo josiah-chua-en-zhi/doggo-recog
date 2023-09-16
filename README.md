@@ -3,7 +3,8 @@ This personal MLOps project is to implement an end-to-end pipeline to create a t
 The main objectives are to test the effectiveness of Neptune AI, an ML model monitoring and storage system, and familiarise myself with PyTorch Lightning a Pytorch wrapper package that allows for faster implementation of training deep learning models.
 
 ## MLOps Pipeline
-![DoggoRecogo drawio](https://github.com/josiah-chua/doggo-recog/assets/81459293/3788d92f-7261-444a-b4ae-9a1f38bb11f7)
+![image](https://github.com/josiah-chua/doggo-recog/assets/81459293/73ff80b2-cf8d-4107-8c26-31fea36c80be)
+
 
 ## File structure
 ```
