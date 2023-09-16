@@ -9,5 +9,6 @@ The main objectives are to test the effectiveness of Neptune AI, an ML model mon
 
 # Future Improvements
 :green_circle: - Done, :yellow_circle: In Progress, :red_circle: - Yet To Implement
-:red_circle Data Collection from users, feedback, and retraining (depending on the data collection policies)
-:yellow_circle Cloud deployment 
+
+:red_circle: Data Collection from users, feedback, and retraining (depending on the data collection policies)
+:yellow_circle: Cloud deployment 
