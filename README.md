@@ -13,8 +13,8 @@ doggo-recog/
 │   ├── a_preprocessing.py
 │   ├── b_experiment.py
 │   ├── c_training.py
-│   └── d_api.py
-│       ├── utils/
+│   ├── d_api.py
+│   └── utils/
 │       ├── utils_data.py
 │       ├── utils_envvar.py
 │       ├── utils_gcs.py
@@ -23,7 +23,7 @@ doggo-recog/
 │       └── utils_training.py
 ├── .gitignore
 ├── README.md
-├── .requirements.txt
+└── .requirements.txt
 ```
 
 ## Original Dataset
