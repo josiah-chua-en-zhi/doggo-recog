@@ -6,6 +6,7 @@ The main objectives are to test the effectiveness of Neptune AI, an ML model mon
 ![DoggoRecogo drawio](https://github.com/josiah-chua/doggo-recog/assets/81459293/3788d92f-7261-444a-b4ae-9a1f38bb11f7)
 
 ## File structure
+```
 doggo-recog/
 ├── src/
 │   ├── a_preprocessing.py
@@ -22,7 +23,7 @@ doggo-recog/
 ├── .gitignore
 ├── README.md
 ├── .requirements.txt
-
+```
 
 ## Original Dataset
 The dataset can be found in the dataset branch 
