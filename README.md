@@ -27,10 +27,13 @@ doggo-recog/
 
 ## Original Dataset
 The dataset can be found in the dataset branch. It is from the standford dogs dataset but the filename have been cleaned up to include the label and a unique id (based on datetime ms) for each photo.
-A similar naming convention will also be used in futer inplemntations of data collection from users.
+A similar naming convention will also be used in futer implementation of data collection from users.
+
+![image](https://github.com/josiah-chua/doggo-recog/assets/81459293/5bdcb5b7-6d2f-479c-8c75-9e9ab8e570d1)
+
 
 ## Preprocessing
-Since the current dataset is quite clean, what the preprocessing script current does is just to check if the pictures can be opened and be fomatted correctly into its 3 channels (RGB) as a couple of photes were noted to have 4 channels (png photos contain a 4th opacity channel).The 4th channel would require an additional preprocessing function, however as this dataset had very few, I opted to just drop the picture. This could be a future enhancement
+Since the current dataset is quite clean, what the preprocessing script current does is just to check if the pictures can be opened and be fomatted correctly into its 3 channels (RGB) as a couple of photes were noted to have 4 channels (png photos contain a 4th opacity channel).The 4th channel would require an additional preprocessing function, however as this dataset had very few, I opted to just drop the picture, and convert it all into jpg to prevent such issues. This could be a future enhancement
 
 
 ## Usage
