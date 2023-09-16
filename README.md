@@ -46,6 +46,8 @@ Since the current dataset is quite clean, what the preprocessing script current 
 # Future Improvements
 :green_circle: - Done, :yellow_circle: In Progress, :red_circle: - Yet To Implement
 
+:yellow_circle: Retraining Script
+
 :yellow_circle: Cloud deployment on GCP Kubecluster with docker images
 
 :red_circle: Training on Cloud Compute
