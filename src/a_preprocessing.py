@@ -4,9 +4,9 @@ Preprocessign script
 import os
 import sys
 import argparse
-from utils_envvar import EnvVar, GeneralUtils
-from utils_gcs import GCSBucket
-from utils_preprocessing import PreprocessingUtils, ImageProcessor
+from utils.utils_envvar import EnvVar, GeneralUtils
+from utils.utils_gcs import GCSBucket
+from utils.utils_preprocessing import PreprocessingUtils, ImageProcessor
 
 
 # Initalize Env Vars

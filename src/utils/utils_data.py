@@ -4,6 +4,7 @@ Utils for data loader and feeding data into models
 """
 Pytorch trianing functions and classes to exceute training experiments
 """
+import os
 import random
 import math
 import multiprocessing as mp
@@ -13,6 +14,10 @@ import torch
 from torch.utils.data import Dataset,DataLoader
 from torchvision import transforms
 from sklearn.model_selection import train_test_split
+from utils.utils_envvar import EnvVar
+
+env_vars = EnvVar()
+random.seed(env_vars.random_state)
 
 class DoggoDataset(Dataset):
     """
@@ -479,20 +484,14 @@ class DataLoaderConstructors():
         self.test_val_transform = None
         self.prediction_transformer = None
 
-    def initalze_prediction_transformer(
-            self,
-            input_size: int = 224,
-            rescale_add: int = 32):
+    def initalze_prediction_transformer(self,input_size: int = 224):
         
         self.prediction_transformer = transforms.Compose([
             ToTensor(filename_col_name = self.filename_col_name,
                      label_col_name = self.label_col_name),
             Rescale(filename_col_name = self.filename_col_name,
                     label_col_name = self.label_col_name, 
-                    output_size = input_size + rescale_add),
-            RandomCrop(filename_col_name = self.filename_col_name,
-                       label_col_name = self.label_col_name,
-                       output_size = input_size),
+                    output_size = input_size),
             ScalePixelValues(filename_col_name = self.filename_col_name,
                              label_col_name = self.label_col_name),
             Normalize(filename_col_name = self.filename_col_name,
@@ -503,7 +502,6 @@ class DataLoaderConstructors():
 
     def initalize_data_transformers(
             self,
-            batch_size: int = 128,
             input_size: int = 224, 
             rescale_add: int = 32,
             random_contrast_p: float = 0.05,
@@ -523,7 +521,6 @@ class DataLoaderConstructors():
             random_gaussian_blur_kernel_height_range: tuple = (7, 12),
             random_gaussian_blur_kernel_width_range: tuple = (7, 12)):
         
-        assert isinstance(batch_size, int), "batch_size must be an integer"
         assert isinstance(input_size, int), "input_size must be an integer"
         assert isinstance(rescale_add, int), "rescale_add must be an integer"
         assert isinstance(random_contrast_p, float), "random_contrast_p must be a float"
@@ -636,7 +633,7 @@ class DataLoaderConstructors():
         )
 
         # Create data loaders.
-        num_workers = 2
+        num_workers = int(os.cpu_count())
         print(f"num_worker: {num_workers}")
         train_dataloader = DataLoader(train_dataset, batch_size=batch_size, num_workers = num_workers)
         val_dataloader = DataLoader(val_dataset, batch_size=batch_size, num_workers = num_workers)
@@ -664,7 +661,7 @@ class DataUtils:
         dataset_df[label_col_name] = dataset_df[label_col_name].apply(lambda x: label_dict[x])
 
         # Flip label dict back
-        label_dict = {i:val for val, i in label_dict.items()}
+        label_dict = {i:val.replace("_", " ").title() for val, i in label_dict.items()}
 
         return dataset_df,label_dict
 
@@ -716,7 +713,7 @@ class DataUtils:
             tmp = dataset_df[dataset_df[label_col_name] == selected_label]
 
             if len(tmp) >= n_samples:
-                tmp = tmp.sample(n=n_samples)
+                tmp = tmp.sample(n=n_samples, random_state = env_vars.random_state)
             
             selected_filenames = pd.concat([selected_filenames, tmp], ignore_index=True)
         
@@ -727,27 +724,19 @@ class DataUtils:
     @staticmethod
     def train_val_test_split(dataset_df: pd.DataFrame,
                              split_ratio: float,
-                             label_col_name: str,
-                             random_state: int):
+                             label_col_name: str):
         
         # shuffle data frame
         train_dataset_df, test_dataset_df = train_test_split(
             dataset_df,
             test_size = split_ratio,
             stratify=dataset_df[label_col_name],
-            random_state=random_state)
+            random_state=env_vars.random_state)
         
         train_dataset_df, val_dataset_df = train_test_split(
             train_dataset_df,
             test_size = split_ratio,
             stratify=train_dataset_df[label_col_name],
-            random_state=random_state)
-        
-        print(train_dataset_df)
-        print(train_dataset_df[label_col_name].value_counts())
-        print(val_dataset_df)
-        print(val_dataset_df[label_col_name].value_counts())
-        print(test_dataset_df)
-        print(test_dataset_df[label_col_name].value_counts())
+            random_state=env_vars.random_state)
         
         return train_dataset_df, val_dataset_df, test_dataset_df

@@ -1,3 +1,6 @@
+"""
+API Script
+"""
 import requests
 import argparse
 import neptune
@@ -8,9 +11,9 @@ from PIL import Image
 import torch.nn.functional as F
 import uvicorn
 from fastapi import FastAPI, Request
-from utils_envvar import EnvVar, GeneralUtils
-from utils_data import DataLoaderConstructors
-from utils_model import Models
+from utils.utils_envvar import EnvVar, GeneralUtils
+from utils.utils_data import DataLoaderConstructors
+from utils.utils_model import Models
 
 """
 Add logging and stuff in the future
@@ -51,7 +54,6 @@ class ModelPredictor:
         self.model = torch.jit.load(env_vars.deployment_model_path.as_posix())
         self.prediction_transformer = self.dataloader_constructors.initalze_prediction_transformer()
         self.label_dict = GeneralUtils.open_json_to_dict(env_vars.deployment_label_path.as_posix())
-        print(self.label_dict)
 
         self.model_repo.stop()
         self.model_version.stop()
@@ -85,12 +87,8 @@ class PredictorApi:
         self.app = FastAPI()
         self.bot = telegram.Bot(env_vars.tele_api_key)
 
-        @self.app.get("/")
-        async def root():
-            return {"message": "No dont touch me there this is my no no square!"}
-
-        @self.app.post("/doggo-recog")
-        async def predict_prob1(req: Request):
+        @self.app.post("/")
+        async def doggo_recog(req: Request):
             print(req)
         
             data = await req.json()

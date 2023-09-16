@@ -1,2 +1,2 @@
-# doggo-recog
-dog recognition CV api plus app
+# First-Iteration
+First Version of the App

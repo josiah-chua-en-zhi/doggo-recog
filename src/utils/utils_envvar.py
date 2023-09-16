@@ -121,6 +121,7 @@ class EnvVar(BaseSettings):
     deployment_label_path = deployment_model_dir / "labels.json"
     cred_dir = root_dir / "credentials"
     tmp_pic_path =  data_dir / "tmp.jpg"
+    url_tunnel_path = cred_dir / "tunnels.json"
 
     label_col_names = "label"
     filenames_col_names = "filenames"
