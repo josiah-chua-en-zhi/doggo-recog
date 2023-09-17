@@ -3,7 +3,7 @@ This personal MLOps project is to implement an end-to-end pipeline to create a t
 The main objectives are to test the effectiveness of Neptune AI, an ML model monitoring and storage system, and familiarise myself with PyTorch Lightning a Pytorch wrapper package that allows for faster implementation of training deep learning models.
 
 ## MLOps Pipeline
-![image](https://github.com/josiah-chua/doggo-recog/assets/81459293/73ff80b2-cf8d-4107-8c26-31fea36c80be)
+![image](https://github.com/josiah-chua/doggo-recog/assets/81459293/8d391a96-ec36-4b51-b1c9-b8c160c4ade7)
 
 
 ## File structure
@@ -39,7 +39,7 @@ The dataset can be found in the dataset branch. It is from the Standford dogs da
 A similar naming convention will also be used in futer implementation of data collection from users.
 The dataset has been cleaned beforehand fomatted correctly into its 3 channels (RGB) as a couple of photes were noted to have 4 channels (png photos contain a 4th opacity channel).
 
-![image](https://github.com/josiah-chua/doggo-recog/assets/81459293/8d391a96-ec36-4b51-b1c9-b8c160c4ade7)
+![image](https://github.com/josiah-chua/doggo-recog/assets/81459293/12ce3fed-7e08-4f2a-a8df-e8be1476350e)
 
 
 ## Preprocessing
