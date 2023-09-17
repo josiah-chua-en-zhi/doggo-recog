@@ -45,14 +45,17 @@ The dataset has been cleaned beforehand fomatted correctly into its 3 channels (
 ## Preprocessing
 Since the current dataset is quite clean, what the preprocessing script current only has a place holder preprocessing funtion. However should user data be stored, there might be a need for futher preprocessing which will be added to the function. This could be a future enhancement
 
+
 After the preprocessing, the script generate npy array of the photos and stores the numpy array files into the GCS preprocessed bucket and the raw images into the raw image bucket. There should be 4 different GCS buckets, new-raw-images, new-preprocessed-images, raw-images, preprocessed-images. In this first iteration, the buckets with new will not be used as they are used for storing new user data for retraining, and the files should bw stored in the other 2 buckets. 
+
 
 There are 2 make executors for the preprocessing stage:
 
-will store the preprocessed files into  raw-images, preprocessed-images buckets
-```make preprocess_training_files```
 
-```make preprocess_new_files``` : while will store the preprocessed files into new-preprocessed-images, raw-images buckets
+```make preprocess_training_files```: will store the preprocessed files into  raw-images, preprocessed-images buckets
+
+
+```make preprocess_new_files``` : will store the preprocessed files into new-preprocessed-images, raw-images buckets
 
 ## Experimentation
 The experimentation section is used because deep learning models take a long time to train, hence to evaluate the effectiveness of ertain models and certain hyperparameters, we can do smaller experimentatiosn with lesser classes and lesser data per class to have a rough gauge of the perormance. While having a better performance in smaller datasets will not gurantee better results in the full dataset, it will be able to give us a sense of how effective it bu looking at the training metrics and prior knowledge of the model archetecture.
