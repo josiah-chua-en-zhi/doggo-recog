@@ -35,14 +35,23 @@ doggo-recog/
 ```
 
 ## Original Dataset
-The dataset can be found in the dataset branch. It is from the Standford dogs dataset but the filename have been cleaned up to include the label and a unique id (based on datetime ms) for each photo.
+The dataset can be found in the dataset branch. It is from the Standford dogs dataset but the filename have been cleaned up to include the label and a unique id (based on datetime ms) for each photo and has been converted to jpg.
 A similar naming convention will also be used in futer implementation of data collection from users.
+The dataset has been cleaned beforehand fomatted correctly into its 3 channels (RGB) as a couple of photes were noted to have 4 channels (png photos contain a 4th opacity channel).
 
 ![image](https://github.com/josiah-chua/doggo-recog/assets/81459293/8d391a96-ec36-4b51-b1c9-b8c160c4ade7)
 
 
 ## Preprocessing
-Since the current dataset is quite clean, what the preprocessing script current does is just to check if the pictures can be opened and be fomatted correctly into its 3 channels (RGB) as a couple of photes were noted to have 4 channels (png photos contain a 4th opacity channel).The 4th channel would require an additional preprocessing function, however as this dataset had very few, I opted to just drop the picture, and convert it all into jpg to prevent such issues. This could be a future enhancement
+Since the current dataset is quite clean, what the preprocessing script current only has a place holder preprocessing funtion. However should user data be stored, there might be a need for futher preprocessing which will be added to the function. This could be a future enhancement
+
+After the preprocessing, the script generate npy array of the photos and stores the numpy array files into the GCS preprocessed bucket and the raw images into the raw image bucket. There should be 4 different GCS buckets, new-raw-images, new-preprocessed-images, raw-images, preprocessed-images. In this first iteration, the buckets with new will not be used as they are used for storing new user data for retraining, and the files should bw stored in the other 2 buckets. 
+
+There are 2 make executors for the preprocessing stage:
+
+'''make preprocess_training_files''' : while will store the preprocessed files into  raw-images, preprocessed-images buckets
+
+'''make preprocess_new_files''' : while will store the preprocessed files into  raw-images, preprocessed-images buckets
 
 
 ## Usage
