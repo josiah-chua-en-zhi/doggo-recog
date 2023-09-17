@@ -76,8 +76,6 @@ The other hyperparameters to try are:
 
 These hyper parameters will also be stored in Neptune in the corresponsing run.
 
-insert photo of these in neptune ai
-
 ## Training
 Before training, the images are converted into pytorch datasets, with transform functions such as, change contrast, perepctive, blightness blur etc. and these augmetations will occur randomly as the dataset is loaded every epoch, allowing the model to gernalize featues better and become more robust. [To understand it better](https://discuss.pytorch.org/t/data-augmentation-in-pytorch/7925?u=nikronic). Hence there is not much need to generate transformed data in the prerpoceessing stage as new data althouugh you can still do so if you want.
 
@@ -125,4 +123,5 @@ Then run the make command ```make launch_bot``` and it should work.
 
 # Relevant Reading Materials
 [Neptune overview](https://neptune.ai/):
+
 [Pytorch lightning overview](https://lightning.ai/docs/pytorch/stable/notebooks/lightning_examples/mnist-hello-world.html):
