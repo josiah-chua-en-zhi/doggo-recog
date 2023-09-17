@@ -62,7 +62,9 @@ The experiment and training are similar, however the experimentation section is 
 
 This is where pytorch lightning and Neptune.ai come in. Pytorch lightning allows us to package our models nicely and easily attach loggers and callbacks for to monitors our training progress. Training metrics can then be sent to the Neptune server through the NeptuneLogger and visualised on a dashboard.
 
-insert photo of neptune ai
+
+![image](https://github.com/josiah-chua/doggo-recog/assets/81459293/d0004fca-7564-4f14-ae90-8641a3a6865b)
+
 
 For the experimentation stage, one can experiment with different model archetecture (vgg, efficientnet, resnet) and these have been initalized with pretrained ImageNet Weights(IMAGENET1K_V1) for [transfer learning](https://machinelearningmastery.com/transfer-learning-for-deep-learning/) to reduce the training time needed.
 
@@ -79,13 +81,16 @@ insert photo of these in neptune ai
 ## Training
 Before training, the images are converted into pytorch datasets, with transform functions such as, change contrast, perepctive, blightness blur etc. and these augmetations will occur randomly as the dataset is loaded every epoch, allowing the model to gernalize featues better and become more robust. [To understand it better](https://discuss.pytorch.org/t/data-augmentation-in-pytorch/7925?u=nikronic). Hence there is not much need to generate transformed data in the prerpoceessing stage as new data althouugh you can still do so if you want.
 
-The training process is handled by pytorch lightning trainer and the callsbacks used are earlystopping and checkpointing. The pateince and max epochs can both be set for the training and early stopping. The checkpointing will only checkpoint the last training weights and the weights of best performing epoch. The model used MulticlassROCAUC for evaluation.
+The training process is handled by pytorch lightning trainer and the callsbacks used are earlystopping and checkpointing. The pateince and max epochs can both be set for the training and early stopping. The checkpointing will only checkpoint the last training weights and the weights of best performing epoch (this will only be saved for the training stage). The model used MulticlassROCAUC for evaluation.
 
-Only during the Trianing stage are the checkpoint artifacts stored along with a jit model for deployment of the weight of the best performing epoch and the the label dict to convert the labels to the 
+Int the training stage, deployment artefacts will also be stored in Neptune's model registary. The best checkpoint (for retaining) along with its [torchscript model](https://towardsdatascience.com/pytorch-jit-and-torchscript-c2a77bac0fff) file(for deplyment) and the label dict to convert the labels to the corresponding dog breeds, will be saved to the model registary.
 
+In the model registary, deployment of different models are very simple as it will jsut require changing that model stage to production. The API will search for the models in production and take the first model to be used.
 
+insert pictutre
 
 # Usage
+
 
 
 
