@@ -85,9 +85,9 @@ The training process is handled by pytorch lightning trainer and the callsbacks 
 
 Int the training stage, deployment artefacts will also be stored in Neptune's model registary. The best checkpoint (for retaining) along with its [torchscript model](https://towardsdatascience.com/pytorch-jit-and-torchscript-c2a77bac0fff) file(for deplyment) and the label dict to convert the labels to the corresponding dog breeds, will be saved to the model registary.
 
-In the model registary, deployment of different models are very simple as it will jsut require changing that model stage to production. The API will search for the models in production and take the first model to be used.
+In the model registary, deployment of different models are very simple as it will jsut require changing that model stage to production. When deployed the API will search for the models in production and take the first model to be used.
 
-![image](https://github.com/josiah-chua/doggo-recog/assets/81459293/9c102f90-966d-475b-8227-cfac883310eb)
+![image](https://github.com/josiah-chua/doggo-recog/assets/81459293/b997dfd1-db26-4c58-baf7-21eb8d19cb30)
 
 # Usage
 
