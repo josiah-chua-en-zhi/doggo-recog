@@ -38,7 +38,7 @@ doggo-recog/
 The dataset can be found in the dataset branch. It is from the Standford dogs dataset but the filename have been cleaned up to include the label and a unique id (based on datetime ms) for each photo.
 A similar naming convention will also be used in futer implementation of data collection from users.
 
-![image](https://github.com/josiah-chua/doggo-recog/assets/81459293/5bdcb5b7-6d2f-479c-8c75-9e9ab8e570d1)
+![image](https://github.com/josiah-chua/doggo-recog/assets/81459293/8d391a96-ec36-4b51-b1c9-b8c160c4ade7)
 
 
 ## Preprocessing
