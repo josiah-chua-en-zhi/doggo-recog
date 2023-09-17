@@ -58,9 +58,9 @@ There are 2 make executors for the preprocessing stage:
 ```make preprocess_new_files``` : will store the preprocessed files into new-preprocessed-images, raw-images buckets
 
 ## Experimentation
-The experiment functions and training are similar, however the experimentation section is used because deep learning models take a long time to train. Hence to evaluate the effectiveness of ertain models and certain hyperparameters, we can do smaller experimentatiosn with lesser classes and lesser data per class to have a rough gauge of the performance. While having a better performance in smaller datasets will not gurantee better results in the full dataset, it will be able to give us a sense of how effective it bu looking at the training metrics and prior knowledge of the model archetecture.
+The experiment and training are similar, however the experimentation section is used because deep learning models take a long time to train. Hence to evaluate the effectiveness of ertain models and certain hyperparameters, we can do smaller experimentatiosn with lesser classes and lesser data per class to have a rough gauge of the performance. While having a better performance in smaller datasets will not gurantee better results in the full dataset, it will be able to give us a sense of how effective it bu looking at the training metrics and prior knowledge of the model archetecture.
 
-This is where pytorch lightning and Neptune.ai come in. Pytorch lightning allows us to package our models nicely and easily attach loggers and callbacks for to monitors our training progress. Training metrics can then be sent ot the Neptune server through the NeptuneLogger and visualised on a dashboard.
+This is where pytorch lightning and Neptune.ai come in. Pytorch lightning allows us to package our models nicely and easily attach loggers and callbacks for to monitors our training progress. Training metrics can then be sent to the Neptune server through the NeptuneLogger and visualised on a dashboard.
 
 insert photo of neptune ai
 
@@ -72,12 +72,12 @@ The other hyperparameters to try are:
 - learning rate (default 1e-3)
 - transformation probaility (default = 0.025): Chance that the training image will go though a random [augmentation](https://pytorch.org/vision/stable/transforms.html)
 
-
-
 insert photo of these in neptune ai
 
 ## Training
+Before taining, the images are converted into pytorch datasets, with transform functions such as, change contrast, perepctive, blightness blur etc. and these augmetations will occur randomly as the dataset is loaded every epoch, allowing the model to gernalize featues better and become more robust. [To understand it better](https://discuss.pytorch.org/t/data-augmentation-in-pytorch/7925?u=nikronic). Hence there is not much need to generate transformed data in the prerpoceessing stage as new data althouugh you can still do so if you want.
 
+The 
 
 
 
