@@ -49,9 +49,10 @@ After the preprocessing, the script generate npy array of the photos and stores 
 
 There are 2 make executors for the preprocessing stage:
 
-'''make preprocess_training_files''' : while will store the preprocessed files into  raw-images, preprocessed-images buckets
+will store the preprocessed files into  raw-images, preprocessed-images buckets
+```make preprocess_training_files```
 
-'''make preprocess_new_files''' : while will store the preprocessed files into new-preprocessed-images, raw-images buckets
+```make preprocess_new_files``` : while will store the preprocessed files into new-preprocessed-images, raw-images buckets
 
 ## Experimentation
 The experimentation section is used because deep learning models take a long time to train, hence to evaluate the effectiveness of ertain models and certain hyperparameters, we can do smaller experimentatiosn with lesser classes and lesser data per class to have a rough gauge of the perormance. While having a better performance in smaller datasets will not gurantee better results in the full dataset, it will be able to give us a sense of how effective it bu looking at the training metrics and prior knowledge of the model archetecture.
