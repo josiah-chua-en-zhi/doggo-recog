@@ -87,7 +87,7 @@ Int the training stage, deployment artefacts will also be stored in Neptune's mo
 
 In the model registary, deployment of different models are very simple as it will jsut require changing that model stage to production. The API will search for the models in production and take the first model to be used.
 
-insert pictutre
+![image](https://github.com/josiah-chua/doggo-recog/assets/81459293/9c102f90-966d-475b-8227-cfac883310eb)
 
 # Usage
 
