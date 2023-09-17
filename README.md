@@ -70,9 +70,10 @@ The other hyperparameters to try are:
 - image input size (default 224)
 - batch size (default 32)
 - learning rate (default 1e-3)
-- transformation probaility (default = 0.025): this is the chance that the training image will go though a random transformation, more will be explained in the training section.
+- transformation probaility (default = 0.025): Chance that the training image will go though a random [augmentation](https://pytorch.org/vision/stable/transforms.html)
 
-  insert photo of these in neptune ai
+
+insert photo of these in neptune ai
 
 ## Training
 
