@@ -72,12 +72,16 @@ The other hyperparameters to try are:
 - learning rate (default 1e-3)
 - transformation probaility (default = 0.025): Chance that the training image will go though a random [augmentation](https://pytorch.org/vision/stable/transforms.html)
 
+These hyper parameters will also be stored in Neptune in the corresponsing run.
+
 insert photo of these in neptune ai
 
 ## Training
-Before taining, the images are converted into pytorch datasets, with transform functions such as, change contrast, perepctive, blightness blur etc. and these augmetations will occur randomly as the dataset is loaded every epoch, allowing the model to gernalize featues better and become more robust. [To understand it better](https://discuss.pytorch.org/t/data-augmentation-in-pytorch/7925?u=nikronic). Hence there is not much need to generate transformed data in the prerpoceessing stage as new data althouugh you can still do so if you want.
+Before training, the images are converted into pytorch datasets, with transform functions such as, change contrast, perepctive, blightness blur etc. and these augmetations will occur randomly as the dataset is loaded every epoch, allowing the model to gernalize featues better and become more robust. [To understand it better](https://discuss.pytorch.org/t/data-augmentation-in-pytorch/7925?u=nikronic). Hence there is not much need to generate transformed data in the prerpoceessing stage as new data althouugh you can still do so if you want.
 
-The 
+The training process is handled by pytorch lightning trainer and the callsbacks used are earlystopping and checkpointing. The pateince and max epochs can both be set for the training and early stopping. The checkpointing will only checkpoint the last training weights and the weights of best performing epoch. The model used MulticlassROCAUC for evaluation.
+
+Only during the Trianing stage are the checkpoint artifacts stored along with a jit model for deployment of the weight of the best performing epoch and the the label dict to convert the labels to the 
 
 
 
