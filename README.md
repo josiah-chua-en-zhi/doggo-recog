@@ -92,7 +92,7 @@ In the model registary, deployment of different models are very simple as it wil
 # Usage
 
 ## Data
-The data can be downloaded from the data branch and the contents should be placed into data/model_data. Then run ````make preprocess_training_files``` to preprocess the files.
+The data can be downloaded from the data branch and the contents should be placed into data/model_data. Then run ```make preprocess_training_files``` to preprocess the files.
 
 Also note all data foldes have been git ignored so you will have to make them. When terraform code is done it will create the folders but for now too bad.
 
