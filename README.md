@@ -91,12 +91,26 @@ insert pictutre
 
 # Usage
 
+## Data
+The data can be downloaded from the data branch and the contents should be placed into data/model_data. Then run ````make preprocess_training_files``` to preprocess the files.
 
+Also note all data foldes have been git ignored so you will have to make them. When terraform code is done it will create the folders but for now too bad.
 
+## Set up GCP storage bucket
 
+Create the 4 Google Cloud Storage Buckets with the same name defined in your environemnt variables. Terraform code to deploy infra will be added soon
 
+## Environment Variable
+There is a sample environment variable file where you can put in the environment variables. But please rename it to .env. 
+The google could Service Account should be [base64 encoded](https://www.base64encode.org/) to a string and places as an enviornment variable.
 
-# 
+## deployment
+
+To deploy this the telegram bot you will first have to follow the first few steps of this [tutorial](https://www.pragnakalp.com/create-telegram-bot-using-python-tutorial-with-examples/) till you generate the telegram bot token to put in your environment variable.
+
+Then set up ngrok as shown [here](https://www.sitepoint.com/use-ngrok-test-local-site/) and create a tunnel to port 8000 uing the CLI ```ngrok http 8000```.
+
+Then run the make command ```make launch_bot``` and it should work.
 
 # Future Improvements
 :green_circle: - Done, :yellow_circle: In Progress, :red_circle: - Yet To Implement
@@ -108,3 +122,7 @@ insert pictutre
 :red_circle: Training on Cloud Compute
 
 :red_circle: Data Collection from users, feedback, and retraining (depending on the data collection policies)
+
+# Relevant Reading Materials
+[Neptune overview](https://neptune.ai/):
+[Pytorch lightning overview](https://lightning.ai/docs/pytorch/stable/notebooks/lightning_examples/mnist-hello-world.html):
