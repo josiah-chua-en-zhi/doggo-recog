@@ -58,7 +58,7 @@ There are 2 make executors for the preprocessing stage:
 ```make preprocess_new_files``` : will store the preprocessed files into new-preprocessed-images, raw-images buckets
 
 ## Experimentation
-The experimentation section is used because deep learning models take a long time to train, hence to evaluate the effectiveness of ertain models and certain hyperparameters, we can do smaller experimentatiosn with lesser classes and lesser data per class to have a rough gauge of the performance. While having a better performance in smaller datasets will not gurantee better results in the full dataset, it will be able to give us a sense of how effective it bu looking at the training metrics and prior knowledge of the model archetecture.
+The experiment functions and training are almost idential, however the experimentation section is used because deep learning models take a long time to train. Hence to evaluate the effectiveness of ertain models and certain hyperparameters, we can do smaller experimentatiosn with lesser classes and lesser data per class to have a rough gauge of the performance. While having a better performance in smaller datasets will not gurantee better results in the full dataset, it will be able to give us a sense of how effective it bu looking at the training metrics and prior knowledge of the model archetecture.
 
 This is where pytorch lightning and Neptune.ai come in. Pytorch lightning allows us to package our models nicely and easily attach loggers and callbacks for to monitors our training progress. Training metrics can then be sent ot the Neptune server through the NeptuneLogger and visualised on a dashboard.
 
@@ -73,9 +73,13 @@ The other hyperparameters to try are:
 - transformation probaility (default = 0.025): Chance that the training image will go though a random [augmentation](https://pytorch.org/vision/stable/transforms.html)
 
 
+
 insert photo of these in neptune ai
 
 ## Training
+
+
+
 
 # Usage
 
