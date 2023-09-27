@@ -1,0 +1,13 @@
+GCSSA_RAW = "Base64 encoded gcs service account key"
+NEW_RAW_IMAGES_BUCKET_NAME = "doggo-recog-new-raw-images"
+NEW_PROCESSED_IMAGES_BUCKET_NAME = "doggo-recog-new-processed-images"
+PROCESSED_IMAGES_BUCKET_NAME = "doggo-recog-processed-images"
+RAW_IMAGES_BUCKET_NAME = "doggo-recog-raw-images"
+
+NEPTUNE_API_TOKEN = 
+NEPTUNE_EXPERIMENT_PROJECT = 
+NEPTUNE_EXPERIMENT_PROJECT_KEY = 
+NEPTUNE_TRAINING_PROJECT = 
+NEPTUNE_TRAINING_PROJECT_KEY = 
+
+TELE_API_KEY = 
